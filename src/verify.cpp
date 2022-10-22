@@ -14,18 +14,15 @@ bool SolutionVerifier::p_verify_convexity() {
   std::size_t idx = 0;
   for (const SimplePolygon &poly : solution().polygons()) {
     if (!poly.is_simple()) {
-      {
-        m_error = fmt::format("polygon {} is not simple", idx);
-        return false;
-      }
+      m_error = fmt::format("polygon {} is not simple", idx);
+      return false;
     }
-    for (auto edge_it = poly.edges_begin(); edge_it != poly.edges_end();
-         ++edge_it) {
-      const auto edge = *edge_it;
-      if (edge.squared_length() == 0) {
-        m_error = fmt::format("polygon {} has a zero length edge", idx);
-        return false;
-      }
+    auto has_zero_length = [](const auto &edge) {
+      return edge.squared_length() == 0;
+    };
+    if (std::any_of(poly.edges_begin(), poly.edges_end(), has_zero_length)) {
+      m_error = fmt::format("polygon {} has a zero length edge", idx);
+      return false;
     }
     if (!poly.is_convex()) {
       m_error = fmt::format("polygon {} is not convex", idx);
@@ -64,7 +61,7 @@ bool SolutionVerifier::p_verify_coverage(const Polygon &coverage) {
   std::vector<Polygon> diff_results;
   CGAL::difference(ipoly, coverage, std::back_inserter(diff_results));
   return std::all_of(
-      diff_results.begin(), diff_results.end(), [this](const auto &poly) {
+      diff_results.begin(), diff_results.end(), [&](const auto &poly) {
         const auto &ob = poly.outer_boundary();
         if (area(poly) > 0) {
           m_error =

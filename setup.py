@@ -9,7 +9,7 @@ from skbuild import setup
 
 setup(
     name="cgshop2023_pyutils",
-    version="0.1.0",
+    version="0.1.1",
     description="Official utilities for the CG:SHOP Challenge 2023.",
     packages=find_packages("python"),  # Include all packages in `./python`.
     package_dir={"": "python"},  # The root for out python package is in `./python`.

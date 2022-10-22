@@ -96,4 +96,5 @@ problem only happened for very complex instances.
 
 ## Changes
 
+* *0.1.1* Some code simplification.
 * *0.1.0* Initial version.
