@@ -1,0 +1,6 @@
+[requires]
+cgal/[==5.3]
+nlohmann_json/[>=3.11]
+
+[generators]
+cmake_find_package
