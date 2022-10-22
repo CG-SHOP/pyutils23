@@ -24,7 +24,6 @@ repos:
     rev: "5.0.4"
     hooks:
       - id: flake8
-        args: ['--config=pyutils23/.flake8']
         additional_dependencies: [flake8-bugbear]
 
   - repo: https://github.com/pre-commit/pygrep-hooks
