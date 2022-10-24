@@ -87,12 +87,13 @@ if err_msg:
 ## Notes on CGAL version
 
 We noticed troubles with inconsistent (wrong) results of the `CGAL::join` operation,
-despite using `epeck`, with CGAL 5.5. Additionally, there seemed to be some
-unexplainable segmentation faults deep within CGAL. We did not observe these
-problems with CGAL 5.3, so we are using that version. We are still working on
-finding out, where the problem has been. Is there really a bug in CGAL or did
-we do something wrong (despite this being very simple code). Unfortunately, this
-problem only happened for very complex instances.
+despite using the exact predicates and exact constructions kernel (`epeck`),
+with CGAL 5.5.
+Additionally, there seemed to be some unexplainable segmentation faults deep within CGAL::difference and CGAL::join.
+We did not observe these problems with CGAL 5.3, so we are using that version.
+We are still working on locating the problem: is there really a bug in CGAL or did
+we do something wrong (despite this being very simple code)? Unfortunately, this
+problem only happened for very complex instances and was hard to reproduce.
 
 > If the verification gives you an error message you cannot explain, please
 > inform us. It may be possible, that the issue still exists.
