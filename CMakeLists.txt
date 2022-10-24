@@ -33,6 +33,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 
+
 # Also need to be defined in `./conanfile.txt`.
 find_package(CGAL REQUIRED)
 find_package(nlohmann_json REQUIRED)

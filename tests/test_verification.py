@@ -97,6 +97,28 @@ def test_examples():
             assert msg == ""
         except KeyError as ke:
             print(ke)
+def test_example_edgecases():
+    idb = InstanceDatabase(
+        os.path.join(os.path.dirname(__file__), "./example_instances.zip")
+    )
+    sol_zip = zipfile.ZipFile(
+        os.path.join(os.path.dirname(__file__), "./edgecase.zip")
+    )
+    filelist = list(sol_zip.filelist)
+    random.shuffle(filelist)
+    for solution_path in filelist:
+        try:
+            if solution_path.is_dir():
+                continue
+            print(solution_path.filename)
+            solution = read_solution(sol_zip.open(solution_path))
+            if solution["instance"] == "testing":
+                continue
+            instance = idb[solution["instance"]]
+            msg = pyverify(instance, solution)
+            assert msg == '' or "zero size" in msg
+        except KeyError as ke:
+            print(ke)
 
 
 def test_bad_examples():
@@ -110,7 +132,7 @@ def test_bad_examples():
     random.shuffle(filelist)
     for solution_path in filelist:
         try:
-            if solution_path.filename == "bad_solutions/area_error_maze_001_sol.json":
+            if str(solution_path.filename) == "bad_solutions/area_error_maze_001_sol.json":
                 continue
             if solution_path.is_dir():
                 continue

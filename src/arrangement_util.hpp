@@ -1,13 +1,13 @@
 #ifndef CGSHOP2023_ARRANGEMENT_UTIL_HPP_
 #define CGSHOP2023_ARRANGEMENT_UTIL_HPP_
 
+#include "cgshop2023_core/cpp_instance.hpp"
 #include <CGAL/Arr_segment_traits_2.h>
 #include <CGAL/Arr_trapezoid_ric_point_location.h>
 #include <CGAL/Arrangement_2.h>
 #include <CGAL/Arrangement_with_history_2.h>
 #include <CGAL/Iso_rectangle_2.h>
 #include <CGAL/Triangular_expansion_visibility_2.h>
-
 namespace cgshop2023 {
 
 using NumType = Kernel::FT;

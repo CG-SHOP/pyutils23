@@ -7,8 +7,8 @@ the easiest option), but this way we have some more control.
 The structure of this project contains some thoughts in order to allow to build
 simple Python-packages, pure C++-libraries, C++-libraries with a Python-binding,
 and Python-packages with native C++-elements. Using this structure, you can start
-with a Python-package and add a native part later to speed things up or
-you can start with a C++-library and  later decide to also add Python-bindings.
+with a Python-package and add a native part later to speed things up, or
+you can start with a C++-library and later decide to also add Python-bindings.
 
 > If you have any suggestions for improving this, please let us know.
 
@@ -26,7 +26,7 @@ extensions in the `cmake`-folder: CPM (a simple package manager) and
 CCache for caching.
 CPM will automatically install some simple dependencies.
 
-For complex dependencies we use *conan* on top. conan is much more powerful
+For complex dependencies we use _conan_ on top. conan is much more powerful
 and faster than CPM, but requires manual intervention, making it annoying
 to use for some quick coding projects. We use it for CGAL and nlohmann_json.
 CGAL has very complex dependencies which would be difficult to handle with CPM
@@ -49,6 +49,7 @@ The CMakeLists.txt is extensively documented and should give you further
 insights.
 
 The C++-related projected structure is shown below.
+
 ```text
 Project without Python-API
 ├── cmake                   <- cmake extensions. conan will also generate files in here.
@@ -67,6 +68,7 @@ Project without Python-API
 ```
 
 To build this project, do
+
 ```shell
 # conan
 cd cmake
@@ -152,6 +154,7 @@ However, you also have to make sure that the cmake project will copy the binarie
 to the right positions in the python module. Check out the `setup.py` and `python/CMakeLists.txt`.
 
 You can build the package with
+
 ```shell
 pip install -r requirements.txt  # python dependencies
 cd cmake || exit
@@ -163,3 +166,19 @@ python3 setup.py install  # triggers building and installing the python module
 ## Coding Style
 
 We roughly follow [scikit-hep](https://scikit-hep.org/developer/style).
+
+## Tools
+
+Run the following command to get some basic feedback and automatic clean up.
+
+```shell
+pre-commit run --all-files
+```
+
+`pre-commit` can be installed via pip and can be setup to run automatically before any `git commit`.
+The first run takes some time because it automatically installs all dependencies in some virtual environment.
+
+The config `.pre-commit-config.yaml` is set up for Python and C++ and can simply be copied for any Python/C++-project.
+It currently uses `black` for Python linting and `llvm`-style for C++. Simply search and replace if you want
+something else (for `black` it can be more difficult). The config is not very sensitive in favour of generality, so
+you should use additional static code analyzers.

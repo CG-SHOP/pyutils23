@@ -1,7 +1,8 @@
 # CG:SHOP 2023 Utilities
 
 This project provides the utilities for parsing and verifying solutions for the
-CG:SHOP Challenge 2023. The verification is exact and expecting most solutions to
+[CG:SHOP Challenge 2023](https://cgshop.ibr.cs.tu-bs.de/competition/cg-shop-2023/#problem-description).
+The verification is exact and expecting most solutions to
 be feasible, which is probably too slow for optimization purposes. For optimization,
 you should probably implement a faster, inexact method and only use our implementation
 for final verification.
@@ -33,7 +34,8 @@ but recommended), check out this repository, and run `./install.sh`.
 via `conan`, and finally build and install the package using `scikit-build`.
 Note that this can take a few minutes, because CGAL is expensive to compile.
 
-You can  alternatively perform the steps manually by
+You can alternatively perform the steps manually by
+
 ```shell
 pip install -r requirements.txt  # install python dependencies
 cd cmake  # switch to the cmake-folder
@@ -41,13 +43,13 @@ conan install .. --build=missing  # install c++ dependencies
 cd ..  # go back to the project's root
 python3 setup.py install  # triggers building and installing the python module
 ```
+
 Afterwards, you can delete the repository from your files because all files you need
 have been copied to Python's package folder.
 
 If anything goes wrong, please open an issue or write us a mail.
 
 ## Usage
-
 
 ### Reading instances
 
@@ -60,6 +62,7 @@ the arithmetic operations if you want to work in Python.
 
 ```python
 from cgshop2023_pyutils import InstanceDatabase
+
 idb = InstanceDatabase("path/to/zip/or/folder/with/instances")
 instance = idb["instance_name"]
 print(instance["outer_boundary"])
@@ -96,5 +99,6 @@ problem only happened for very complex instances.
 
 ## Changes
 
-* *0.1.1* Some code simplification.
-* *0.1.0* Initial version.
+- _0.1.2_ Support for large numbers. Some further simplification.
+- _0.1.1_ Some code simplification.
+- _0.1.0_ Initial version.

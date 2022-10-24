@@ -38,15 +38,14 @@ class InstanceDatabase:
                 return InstanceZipDatabase(path, enable_cache=enable_cache)
             else:
                 raise FileNotFoundError(f"{path} is neither a directory or a zipfile.")
-        raise FileNotFoundError("{path} not found".format(path=path))
+        raise FileNotFoundError(f"{path} not found")
 
     def __iter__(self) -> typing.Dict:
         """
         Iterate over all instances in database.
         :return: Instance objects
         """
-        for instance in self._inner_database:
-            yield instance
+        yield from self._inner_database
 
     def __getitem__(self, name: str) -> typing.Dict:
         """

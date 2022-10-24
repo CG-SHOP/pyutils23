@@ -26,17 +26,16 @@ class Instance {
 public:
   explicit Instance(const Polygon &poly) : m_polygon(poly) {}
   explicit Instance(Polygon &&poly) : m_polygon(std::move(poly)) {}
-  const Polygon &polygon() const noexcept { return m_polygon; }
+  [[nodiscard]] const Polygon &polygon() const noexcept { return m_polygon; }
 
   void write(std::ostream &output, const std::string &name);
   static Instance read(std::istream &input, std::string &out_name);
 
-  std::size_t num_vertices() const noexcept {
-    std::size_t result = m_polygon.outer_boundary().container().size();
-    for (const auto &h : m_polygon.holes()) {
-      result += h.container().size();
-    }
-    return result;
+  [[nodiscard]] std::size_t num_vertices() const noexcept {
+    return std::transform_reduce(
+        m_polygon.holes_begin(), m_polygon.holes_end(),
+        m_polygon.outer_boundary().container().size(), std::plus<>(),
+        [](const auto &hole) { return hole.container().size(); });
   }
 
 private:

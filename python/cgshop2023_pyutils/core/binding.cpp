@@ -69,6 +69,7 @@ PYBIND11_MODULE(_cgshop2023_core, m) {
       .def(py::init(&str_to_exact))
       .def(py::self / Kernel::FT())
       .def(py::self + Kernel::FT())
+      .def(py::self * Kernel::FT())
       .def("__float__", &CGAL::to_double<cgshop2023::Kernel::FT>)
       .def("__str__", [](const Kernel::FT &x) {
         return std::to_string(CGAL::to_double(x));

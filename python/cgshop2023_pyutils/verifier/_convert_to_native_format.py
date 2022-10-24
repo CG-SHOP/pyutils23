@@ -37,6 +37,11 @@ def _to_number(number_data):
                 FieldNumber(elements[1]) / FieldNumber(10 ** len(elements[1]))
             )
             return x
+        if len(number_data) > 18:
+            print("WARNING: Very large number.")
+            return (
+                FieldNumber(number_data[18:]) * FieldNumber(10**18)
+            ) + FieldNumber(number_data[:18])
         return FieldNumber(number_data)
     if isinstance(number_data, dict):
         return _to_number(number_data["num"]) / _to_number(number_data.get("den", 1))
