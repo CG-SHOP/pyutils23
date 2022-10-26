@@ -28,24 +28,15 @@ this environment, because, e.g., the `glibc` of `conda` can be incompatible with
 `glibc`.
 
 If `gcc` and `cmake` are installed, just switch into your python environment (optional,
-but recommended), check out this repository, and run `./install.sh`.
-
-`./install.sh` will first install Python dependencies via `pip`, then C++ dependencies
-via `conan`, and finally build and install the package using `scikit-build`.
-Note that this can take a few minutes, because CGAL is expensive to compile.
-
-You can alternatively perform the steps manually by
+but recommended), check out this repository, and run 
 
 ```shell
-pip install -r requirements.txt  # install python dependencies
-cd cmake  # switch to the cmake-folder
-conan install .. --build=missing  # install c++ dependencies
-cd ..  # go back to the project's root
-python3 setup.py install  # triggers building and installing the python module
+pip install .
 ```
 
 Afterwards, you can delete the repository from your files because all files you need
-have been copied to Python's package folder.
+have been copied to Python's package folder. We are working on making the
+package installable directly from PyPI.
 
 If anything goes wrong, please open an issue or write us a mail.
 
