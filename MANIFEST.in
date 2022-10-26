@@ -4,6 +4,7 @@ include conanfile.txt
 include CMakeLists.txt
 include setup.py
 include pyproject.toml
+include requirements.txt
 include *.md
 include cmake/CCache.cmake
 include cmake/CPM.cmake
