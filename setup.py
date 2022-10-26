@@ -6,6 +6,9 @@ modules easier and more reliable.
 
 from setuptools import find_packages
 from skbuild import setup
+# automatically running conan. Ugly workaround, but does its job.
+import subprocess
+subprocess.run(["conan", "install", ".", "-if", "cmake"], check=True)
 
 setup(
     name="cgshop2023_pyutils",
