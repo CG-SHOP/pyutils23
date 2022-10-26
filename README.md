@@ -91,6 +91,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.1.3_ Solution iterator, installable via pip.
 - _0.1.2_ Support for large numbers. Some further simplification.
 - _0.1.1_ Some code simplification.
 - _0.1.0_ Initial version.
