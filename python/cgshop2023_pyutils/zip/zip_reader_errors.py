@@ -9,7 +9,9 @@ class ZipReaderError(Exception):
 class InvalidFileName(ZipReaderError):
     def __init__(self, file_name):
         self.file_name = file_name
-        super().__init__(f"The ZIP archive contains the invalid file name: '{file_name}'!")
+        super().__init__(
+            f"The ZIP archive contains the invalid file name: '{file_name}'!"
+        )
 
 
 class FileTooLargeError(ZipReaderError):
@@ -19,7 +21,8 @@ class FileTooLargeError(ZipReaderError):
         self.file_size_limit = file_size_limit
         super().__init__(
             f"The ZIP archive contains the file '{self.file_name}' with a size "
-            f"of {self.file_size / 1_000_000} MB (only {self.file_size_limit / 1_000_000} MB allowed)!")
+            f"of {self.file_size / 1_000_000} MB (only {self.file_size_limit / 1_000_000} MB allowed)!"
+        )
 
 
 class ZipTooLargeError(ZipReaderError):
@@ -40,27 +43,33 @@ class NoSolutionsError(ZipReaderError):
 class InvalidJSONError(ZipReaderError):
     def __init__(self, file_name, message):
         self.file_name = file_name
-        super().__init__(f"The ZIP archive contains the file '{file_name}'"
-                         f" which is not a valid JSON-encoded file: {message}!")
+        super().__init__(
+            f"The ZIP archive contains the file '{file_name}'"
+            f" which is not a valid JSON-encoded file: {message}!"
+        )
 
 
 class InvalidEncodingError(ZipReaderError):
     def __init__(self, file_name):
         self.file_name = file_name
-        super().__init__(f"File '{file_name}' in the ZIP uses an unrecognized character encoding; "
-                         f"please use UTF-8 instead.")
+        super().__init__(
+            f"File '{file_name}' in the ZIP uses an unrecognized character encoding; "
+            f"please use UTF-8 instead."
+        )
 
 
 class InvalidZipError(ZipReaderError):
     def __init__(self, message):
         super().__init__(
-            f"The ZIP archive is corrupted and could not be decompressed: {message}!")
+            f"The ZIP archive is corrupted and could not be decompressed: {message}!"
+        )
 
 
 class BadZipChecker:
     """
     Check if zip is bad/malicious/corrupted.
     """
+
     def __init__(self, file_size_limit: int, zip_size_limit: int):
         self.file_size_limit = file_size_limit
         self.zip_size_limit = zip_size_limit
@@ -81,8 +90,9 @@ class BadZipChecker:
     def _check_decompressed_sizes(self, f: ZipFile):
         for info in f.filelist:
             if info.file_size > self.file_size_limit:
-                raise FileTooLargeError(info.filename, info.file_size,
-                                        self.file_size_limit)
+                raise FileTooLargeError(
+                    info.filename, info.file_size, self.file_size_limit
+                )
 
     def _check_crc(self, zip_file):
         bad_filename = zip_file.testzip()

@@ -21,6 +21,7 @@ def read_solution(path) -> typing.Dict:
     data = json.load(path)
     return parse_solution(data)
 
+
 def parse_solution(data):
     if data["type"] != "CGSHOP2023_Solution":
         raise ValueError("Not a CGSHOP2023 solution file")
@@ -40,5 +41,6 @@ def parse_solution(data):
         raise ValueError("Badly encoded polygon. All polygons need to be lists.")
     if not all(len(p) >= 3 for p in polygons):
         raise ValueError(
-            "All polygons need to consist of at least three distinct points.")
+            "All polygons need to consist of at least three distinct points."
+        )
     return data

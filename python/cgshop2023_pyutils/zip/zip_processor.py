@@ -4,16 +4,21 @@ in it. It should be reasonably robust and have some basic security features.
 """
 import json
 import typing
-from typing import BinaryIO, Union, Dict, Iterator, Optional
-from os import PathLike, path
+from typing import BinaryIO, Union, Iterator
+from os import PathLike
 from zipfile import ZipFile, BadZipFile
 from json import JSONDecodeError
 
 import chardet
 
 from ..io import parse_solution
-from .zip_reader_errors import BadZipChecker, NoSolutionsError, InvalidEncodingError, \
-    InvalidJSONError, InvalidZipError
+from .zip_reader_errors import (
+    BadZipChecker,
+    NoSolutionsError,
+    InvalidEncodingError,
+    InvalidJSONError,
+    InvalidZipError,
+)
 
 
 class ZipSolutionIterator:
@@ -28,11 +33,12 @@ class ZipSolutionIterator:
     ```
     """
 
-    def __init__(self, instance_database: InstanceDatabase,
-                 file_size_limit: int = 250 * 1_000_000,
-                 zip_size_limit: int = 2000 * 1_000_000,
-                 solution_extensions=("json", "solution"),
-                 ):
+    def __init__(
+        self,
+        file_size_limit: int = 250 * 1_000_000,
+        zip_size_limit: int = 2000 * 1_000_000,
+        solution_extensions=("json", "solution"),
+    ):
         """
         Set the parameters in the constructor. Use the __call__ to actually iterate
         a zip file.
@@ -40,8 +46,9 @@ class ZipSolutionIterator:
         :param zip_size_limit: Limit the overall decompressed size of the zip.
         :param solution_extensions: What file extensions should be checked?
         """
-        self._checker = BadZipChecker(file_size_limit=file_size_limit,
-                                      zip_size_limit=zip_size_limit)
+        self._checker = BadZipChecker(
+            file_size_limit=file_size_limit, zip_size_limit=zip_size_limit
+        )
         self._solution_extensions = solution_extensions
 
     def _check_if_bad_zip(self, zipfile):
@@ -81,10 +88,12 @@ class ZipSolutionIterator:
         :return: json
         """
         try:
-            return json.loads(str(bytes, encoding="utf-8", errors='strict'))
-        except UnicodeDecodeError as ude:
+            return json.loads(str(bytes, encoding="utf-8", errors="strict"))
+        except UnicodeDecodeError:
             encoding = chardet.detect(bytes)
-            return json.loads(str(bytes, encoding=encoding["encoding"], errors='strict'))
+            return json.loads(
+                str(bytes, encoding=encoding["encoding"], errors="strict")
+            )
 
     def _parse_file(self, solution_file, file_name, info):
         # read no more than the claimed file_size bytes (which we checked for limit violations)
@@ -104,8 +113,9 @@ class ZipSolutionIterator:
                 info = zip_file.getinfo(file_name)
                 yield file_name, self._parse_file(sol_file, file_name, info)
 
-    def __call__(self, path_or_file: Union[BinaryIO, str, PathLike]) \
-            -> Iterator[typing.Dict]:
+    def __call__(
+        self, path_or_file: Union[BinaryIO, str, PathLike]
+    ) -> Iterator[typing.Dict]:
         """
         Iterates over all solutions in the zip.
         :param path_or_file: Zip or file
@@ -115,10 +125,14 @@ class ZipSolutionIterator:
             with ZipFile(path_or_file) as zip_file:
                 self._check_if_bad_zip(zip_file)
                 for file_name, solution_json in self._iterate_solution_jsons(zip_file):
-                    meta = {"zip_info": {"zip_file": zip_file.filename,
-                                         "file_in_zip": file_name}}
+                    meta = {
+                        "zip_info": {
+                            "zip_file": zip_file.filename,
+                            "file_in_zip": file_name,
+                        }
+                    }
                     solution = parse_solution(solution_json)
                     solution["meta"] = meta
                     yield solution
         except BadZipFile as e:
-            raise InvalidZipError(f"{e}")
+            raise InvalidZipError(f"{e}") from e
