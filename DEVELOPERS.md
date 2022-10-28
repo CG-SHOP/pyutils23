@@ -133,10 +133,12 @@ Example project with Python-API
 ├── include
 │   └── fastcode
 │       └── fastcode.h
+├── MANIFEST.in              <- Defines source files (copy and paste thanks to regex)
+├── pyproject.toml           <- Tells pip how to init the build process before setup.py
 ├── python
 │   ├── CMakeLists.txt
 │   └── pyfastcode
-│       ├── binding.cpp
+│       ├── binding.cpp      <- Bindings
 │       └── __init__.py
 ├── README.md
 ├── requirements.txt
@@ -156,12 +158,16 @@ to the right positions in the python module. Check out the `setup.py` and `pytho
 You can build the package with
 
 ```shell
-pip install -r requirements.txt  # python dependencies
-cd cmake || exit
-conan install .. --build=missing  # c++ dependencies
-cd ..
-python3 setup.py install  # triggers building and installing the python module
+pip install .
 ```
+
+or
+
+```shell
+python3 setup.py development
+```
+
+if you want to create the binaries in-source for development.
 
 ## Coding Style
 

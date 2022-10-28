@@ -19,5 +19,5 @@ target_link_libraries(_cgshop2023_core PRIVATE fmt::fmt CGAL::CGAL)
 target_compile_options(_cgshop2023_core PRIVATE
         "$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall>")
 # This definition is important for scikit-build to copy the binary to the right position.
-install(TARGETS _cgshop2023_core DESTINATION python/cgshop2023_pyutils/core)
+install(TARGETS _cgshop2023_core DESTINATION ./python/cgshop2023_pyutils/core)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

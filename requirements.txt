@@ -1,3 +1,4 @@
+chardet>=4.0.0
 conan>=1.53.0
 networkx>=2.5.1
 pytest>=7.1.2

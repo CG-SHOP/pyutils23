@@ -18,36 +18,20 @@ implement an effizient optimizer with Python and C++.
 
 ## Installation
 
-This python package has a native core, which requires a plattform specific compilation.
-Thanks to [conan](https://conan.io/) and [scikit-build](https://scikit-build.readthedocs.io/en/latest/),
-it is relatively easy to build and install the package on nearly every system.
-
-You need to have `gcc` and `cmake` installed on your system. This is probably already
-the case. If you are using a `conda` environment, you may need to install `gcc` within
-this environment, because, e.g., the `glibc` of `conda` can be incompatible with your system's
-`glibc`.
-
-If `gcc` and `cmake` are installed, just switch into your python environment (optional,
-but recommended), check out this repository, and run `./install.sh`.
-
-`./install.sh` will first install Python dependencies via `pip`, then C++ dependencies
-via `conan`, and finally build and install the package using `scikit-build`.
-Note that this can take a few minutes, because CGAL is expensive to compile.
-
-You can alternatively perform the steps manually by
+Installation is easy via
 
 ```shell
-pip install -r requirements.txt  # install python dependencies
-cd cmake  # switch to the cmake-folder
-conan install .. --build=missing  # install c++ dependencies
-cd ..  # go back to the project's root
-python3 setup.py install  # triggers building and installing the python module
+pip install csghop2023-pyutils
 ```
 
-Afterwards, you can delete the repository from your files because all files you need
-have been copied to Python's package folder.
+Not that this can take some minutes, because a native core based on CGAL will 
+automatically be compiled on your machine. We may provide precompiled versions for
+some systems in the future.
 
-If anything goes wrong, please open an issue or write us a mail.
+If anything goes wrong, please open an issue or write us a mail. Automatically
+compiling C++-code is not trivial on arbitrary setups, and we may not be
+aware of some problems with special configurations (or environemnts that
+do not have a all developer tools installed by default, anyways).
 
 ## Usage
 
@@ -100,6 +84,8 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.0_ Can now be installed with `pip install cgshop2023-pyutils` on most machines!
+- _0.1.3_ Solution iterator, installable via pip.
 - _0.1.2_ Support for large numbers. Some further simplification.
 - _0.1.1_ Some code simplification.
 - _0.1.0_ Initial version.

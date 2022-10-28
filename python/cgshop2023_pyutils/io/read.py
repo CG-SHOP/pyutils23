@@ -19,6 +19,10 @@ def read_instance(path) -> typing.Dict:
 @open_file(0, mode="r")
 def read_solution(path) -> typing.Dict:
     data = json.load(path)
+    return parse_solution(data)
+
+
+def parse_solution(data):
     if data["type"] != "CGSHOP2023_Solution":
         raise ValueError("Not a CGSHOP2023 solution file")
     if "id" in data and "instance" not in data:
@@ -28,6 +32,15 @@ def read_solution(path) -> typing.Dict:
     if not data["instance"] or not isinstance(data["instance"], str):
         raise ValueError("Missing instance name")
     polygons = data["polygons"]
-    if not isinstance(polygons, list) or not polygons:
+    if not isinstance(polygons, list):
+        raise ValueError("Solution is not a list.")
+    data["polygons"] = [p for p in data["polygons"] if p]  # remove empty polygons
+    if not polygons:
         raise ValueError("At least one polygon must be provided")
+    if not all(isinstance(p, list) for p in polygons):
+        raise ValueError("Badly encoded polygon. All polygons need to be lists.")
+    if not all(len(p) >= 3 for p in polygons):
+        raise ValueError(
+            "All polygons need to consist of at least three distinct points."
+        )
     return data
