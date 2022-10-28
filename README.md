@@ -18,6 +18,12 @@ implement an effizient optimizer with Python and C++.
 
 ## Installation
 
+Installation is easy via
+
+```shell
+pip install csghop2023-pyutils
+```
+
 This python package has a native core, which requires a plattform specific compilation.
 Thanks to [conan](https://conan.io/) and [scikit-build](https://scikit-build.readthedocs.io/en/latest/),
 it is relatively easy to build and install the package on nearly every system.
@@ -91,6 +97,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.0_ Can now be installed with `pip install cgshop2023-pyutils` on most machines!
 - _0.1.3_ Solution iterator, installable via pip.
 - _0.1.2_ Support for large numbers. Some further simplification.
 - _0.1.1_ Some code simplification.
