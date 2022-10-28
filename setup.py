@@ -10,7 +10,9 @@ from skbuild import setup
 # automatically running conan. Ugly workaround, but does its job.
 import subprocess
 
-subprocess.run(["conan", "install", ".", "-if", "cmake"], check=True)
+subprocess.run(
+    ["python3", "-m", "conans.conan", "install", ".", "-if", "cmake"], check=True
+)
 
 
 def readme():
@@ -23,7 +25,7 @@ def readme():
 
 setup(
     name="cgshop2023_pyutils",
-    version="0.2.0",
+    version="0.2.1",
     description="Official utilities for the CG:SHOP Challenge 2023.",
     long_description=readme(),
     url="https://github.com/CG-SHOP/pyutils23",
