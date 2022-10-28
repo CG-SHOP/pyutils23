@@ -10,8 +10,12 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h> // automatic conversion of vectors
 #include <string>
+#include <cmath>
 
 namespace py = pybind11;
+using namespace cgshop2023;
+using Polygon2 = CGAL::Polygon_2<Kernel>;
+using Polygon2WithHoles = CGAL::Polygon_with_holes_2<Kernel>;
 
 // Exact conversion of a long to FT.
 auto to_exact(std::int64_t x) {
@@ -21,14 +25,27 @@ auto to_exact(std::int64_t x) {
   return Kernel::FT(hi32) + Kernel::FT(lo32);
 }
 
-// Exact conversion of a string to FT. Only works if the number fits in a long.
-auto str_to_exact(const std::string &number) {
-  return to_exact(std::stol(number));
+// Exact conversion of a string to FT.
+Kernel::FT str_to_exact(std::string number) {
+  while(number.length()>1 && number.at(0) == '0') {  // Delete leading zeros
+    number.erase(0, 1);
+  }
+  if(std::count(number.begin(), number.end(), '/') == 1) {  // rational numbers
+    const auto point_pos = number.find('/');
+    const auto numerator = str_to_exact(number.substr(0, point_pos));
+    const auto denominator = str_to_exact(number.substr(point_pos+1, number.length()-point_pos));
+    return numerator/denominator;
+  }
+  constexpr size_t max_len = 14;
+  if (number.length()<=max_len) {
+    return to_exact(std::stol(number));
+  }
+  const Kernel::FT small_part = str_to_exact(number.substr(number.length()-max_len, max_len));
+  const Kernel::FT large_part = std::pow(10, max_len)*str_to_exact(number.substr(0, number.length()-max_len));
+  return large_part+small_part;
 }
 
-using namespace cgshop2023;
-using Polygon2 = CGAL::Polygon_2<Kernel>;
-using Polygon2WithHoles = CGAL::Polygon_with_holes_2<Kernel>;
+
 
 std::string verify(const Instance &instance, Solution &solution) {
   SolutionVerifier verifier(&instance, &solution);
@@ -70,6 +87,7 @@ PYBIND11_MODULE(_cgshop2023_core, m) {
       .def(py::self / Kernel::FT())
       .def(py::self + Kernel::FT())
       .def(py::self * Kernel::FT())
+      .def(py::self == Kernel::FT())
       .def("__float__", &CGAL::to_double<cgshop2023::Kernel::FT>)
       .def("__str__", [](const Kernel::FT &x) {
         return std::to_string(CGAL::to_double(x));
@@ -80,6 +98,7 @@ PYBIND11_MODULE(_cgshop2023_core, m) {
       .def(py::init<Kernel::FT, Kernel::FT>())
       .def("x", [](const Point &p) { return p.x(); })
       .def("y", [](const Point &p) { return p.y(); })
+      .def(py::self == Point())
       .def("__str__", [](const Point &p) {
         return fmt::format("({}, {})", CGAL::to_double(p.x()),
                            CGAL::to_double(p.y()));

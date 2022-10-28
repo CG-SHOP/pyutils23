@@ -51,6 +51,19 @@ def test_verify_fail2():
         poly_with_holes, solution
     )
 
+def test_verify_fail3():
+    points = [
+        Point(FieldNumber(x), FieldNumber(y))
+        for x, y in ((0, 0), (1, 0), (1, 1), (0, 1))
+    ]
+    polygon = Polygon(points)
+    poly_with_holes = PolygonWithHoles(polygon, [])
+    solution = [
+        Polygon(
+            [Point(FieldNumber(str(x)), FieldNumber(str(y))) for x, y in ((0, 0), (1, 0), (1, 1), (0,"11/10"))]
+        )
+    ]
+    assert verify( poly_with_holes, solution) != ""
 
 def test_pyverify():
     instance = {

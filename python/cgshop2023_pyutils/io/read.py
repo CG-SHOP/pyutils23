@@ -31,6 +31,7 @@ def parse_solution(data):
         data["instance"] = data["name"]
     if not data["instance"] or not isinstance(data["instance"], str):
         raise ValueError("Missing instance name")
+    data["instance"] = data["instance"].split("/")[-1].split(".")[0]
     polygons = data["polygons"]
     if not isinstance(polygons, list):
         raise ValueError("Solution is not a list.")

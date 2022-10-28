@@ -6,6 +6,19 @@ from ..core import (
     PolygonWithHoles,
 )
 
+def _str_to_number(number_data: str) -> FieldNumber:
+    number_data = number_data.strip()
+    if "." in number_data:
+        elements = number_data.split(".")
+        if len(elements) != 2:
+            raise ValueError(f"Cannot parse {number_data}.")
+        x = _str_to_number(elements[0]) + (
+            _str_to_number(elements[1]) / _to_number(10 ** len(elements[1]))
+        )
+        return x
+    while(len(number_data)>1 and number_data[0]=="0"):  # remove leading zeros
+        number_data = number_data[1:]
+    return FieldNumber(number_data)
 
 def _to_number(number_data):
     if isinstance(number_data, float):
@@ -14,35 +27,18 @@ def _to_number(number_data):
         try:
             num, fp = str(number_data).split(".")
             len_fp = len(str(number_data).split(".")[1])
-            print("WARNING: Automatic float translation.")
-            x = FieldNumber(num) + (FieldNumber(fp) / FieldNumber(10**len_fp))
+            x = _to_number(num) + (_to_number(fp) / _to_number(10**len_fp))
             return x
         except Exception:
             pass
         raise ValueError("Floating point not supported.")
     if isinstance(number_data, int):
-        return FieldNumber(number_data)
+        if number_data< (2**60):  # large ints in python are special...
+            return FieldNumber(number_data)
+        else:
+            return _str_to_number(str(number_data))
     if isinstance(number_data, str):
-        number_data = number_data.strip()
-        if "/" in number_data:
-            elements = number_data.split("/")
-            if len(elements) != 2:
-                raise ValueError("Cannot convert number with multiple '/'")
-            return _to_number(elements[0]) / _to_number(elements[1])
-        if "." in number_data:
-            elements = number_data.split(".")
-            if len(elements) != 2:
-                raise ValueError(f"Cannot parse {number_data}.")
-            x = FieldNumber(elements[0]) + (
-                FieldNumber(elements[1]) / FieldNumber(10 ** len(elements[1]))
-            )
-            return x
-        if len(number_data) > 18:
-            print("WARNING: Very large number.")
-            return (
-                FieldNumber(number_data[18:]) * FieldNumber(10**18)
-            ) + FieldNumber(number_data[:18])
-        return FieldNumber(number_data)
+        return _str_to_number(number_data)
     if isinstance(number_data, dict):
         return _to_number(number_data["num"]) / _to_number(number_data.get("den", 1))
     raise ValueError(f"Don't know how to convert '{number_data}'.")
