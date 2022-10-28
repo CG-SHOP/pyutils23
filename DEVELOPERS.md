@@ -162,9 +162,11 @@ pip install .
 ```
 
 or
+
 ```shell
 python3 setup.py development
 ```
+
 if you want to create the binaries in-source for development.
 
 ## Coding Style

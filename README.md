@@ -28,7 +28,7 @@ this environment, because, e.g., the `glibc` of `conda` can be incompatible with
 `glibc`.
 
 If `gcc` and `cmake` are installed, just switch into your python environment (optional,
-but recommended), check out this repository, and run 
+but recommended), check out this repository, and run
 
 ```shell
 pip install .

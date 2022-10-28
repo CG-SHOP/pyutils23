@@ -34,6 +34,6 @@ setup(
         # requirements necessary for basic usage (subset of requirements.txt)
         "chardet>=4.0.0",
         "networkx>=2.5.1",
-        "requests>=2.25.1"
-    ]
+        "requests>=2.25.1",
+    ],
 )
