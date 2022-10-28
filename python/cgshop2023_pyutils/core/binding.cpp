@@ -5,12 +5,12 @@
 #include "cgshop2023_core/verify.hpp"
 #include "cgshop2023_core/verify_instance.hpp"
 #include <CGAL/number_utils.h>
+#include <cmath>
 #include <fmt/core.h>
 #include <pybind11/operators.h> // to define operator overloading
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h> // automatic conversion of vectors
 #include <string>
-#include <cmath>
 
 namespace py = pybind11;
 using namespace cgshop2023;
@@ -27,25 +27,27 @@ auto to_exact(std::int64_t x) {
 
 // Exact conversion of a string to FT.
 Kernel::FT str_to_exact(std::string number) {
-  while(number.length()>1 && number.at(0) == '0') {  // Delete leading zeros
-    number.erase(0, 1);
-  }
-  if(std::count(number.begin(), number.end(), '/') == 1) {  // rational numbers
+  number.erase(0, number.find_first_not_of('0'));
+  if (number.empty())
+    number += '0';
+  if (std::count(number.begin(), number.end(), '/') == 1) { // rational numbers
     const auto point_pos = number.find('/');
     const auto numerator = str_to_exact(number.substr(0, point_pos));
-    const auto denominator = str_to_exact(number.substr(point_pos+1, number.length()-point_pos));
-    return numerator/denominator;
+    const auto denominator =
+        str_to_exact(number.substr(point_pos + 1, number.length() - point_pos));
+    return numerator / denominator;
   }
   constexpr size_t max_len = 14;
-  if (number.length()<=max_len) {
+  if (number.length() <= max_len) {
     return to_exact(std::stol(number));
   }
-  const Kernel::FT small_part = str_to_exact(number.substr(number.length()-max_len, max_len));
-  const Kernel::FT large_part = std::pow(10, max_len)*str_to_exact(number.substr(0, number.length()-max_len));
-  return large_part+small_part;
+  const Kernel::FT small_part =
+      str_to_exact(number.substr(number.length() - max_len, max_len));
+  const Kernel::FT large_part =
+      std::pow(10, max_len) *
+      str_to_exact(number.substr(0, number.length() - max_len));
+  return large_part + small_part;
 }
-
-
 
 std::string verify(const Instance &instance, Solution &solution) {
   SolutionVerifier verifier(&instance, &solution);
