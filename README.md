@@ -24,27 +24,14 @@ Installation is easy via
 pip install csghop2023-pyutils
 ```
 
-This python package has a native core, which requires a plattform specific compilation.
-Thanks to [conan](https://conan.io/) and [scikit-build](https://scikit-build.readthedocs.io/en/latest/),
-it is relatively easy to build and install the package on nearly every system.
+Not that this can take some minutes, because a native core based on CGAL will 
+automatically be compiled on your machine. We may provide precompiled versions for
+some systems in the future.
 
-You need to have `gcc` and `cmake` installed on your system. This is probably already
-the case. If you are using a `conda` environment, you may need to install `gcc` within
-this environment, because, e.g., the `glibc` of `conda` can be incompatible with your system's
-`glibc`.
-
-If `gcc` and `cmake` are installed, just switch into your python environment (optional,
-but recommended), check out this repository, and run
-
-```shell
-pip install .
-```
-
-Afterwards, you can delete the repository from your files because all files you need
-have been copied to Python's package folder. We are working on making the
-package installable directly from PyPI.
-
-If anything goes wrong, please open an issue or write us a mail.
+If anything goes wrong, please open an issue or write us a mail. Automatically
+compiling C++-code is not trivial on arbitrary setups, and we may not be
+aware of some problems with special configurations (or environemnts that
+do not have a all developer tools installed by default, anyways).
 
 ## Usage
 
