@@ -24,14 +24,14 @@ Installation is easy via
 pip install csghop2023-pyutils
 ```
 
-Not that this can take some minutes, because a native core based on CGAL will 
+Note that this can take some minutes, because a native core based on CGAL will
 automatically be compiled on your machine. We may provide precompiled versions for
 some systems in the future.
 
 If anything goes wrong, please open an issue or write us a mail. Automatically
 compiling C++-code is not trivial on arbitrary setups, and we may not be
 aware of some problems with special configurations (or environemnts that
-do not have a all developer tools installed by default, anyways).
+do not have all developer tools installed by default).
 
 ## Usage
 
@@ -84,6 +84,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.1_ Conan is now called directly via `python -m`, in case python modules are not imported to PATH.
 - _0.2.0_ Can now be installed with `pip install cgshop2023-pyutils` on most machines!
 - _0.1.3_ Solution iterator, installable via pip.
 - _0.1.2_ Support for large numbers. Some further simplification.
