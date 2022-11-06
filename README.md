@@ -33,6 +33,17 @@ compiling C++-code is not trivial on arbitrary setups, and we may not be
 aware of some problems with special configurations (or environemnts that
 do not have all developer tools installed by default).
 
+### Requirements
+
+Your system needs to be able to build C++-code, i.e., have gcc or clang available.
+We expected most participants to already have such a setup, otherwise you should
+get a proper error message explaining the problem (if not, please open an issue).
+Mac OS X users may have to execute `xcode-select --install`.
+
+> :warning: The installation takes some minutes and needs a stable internet connection!
+> If it fails, simply try again. If it fails again, please open an issue to let us know
+> about the problem.
+
 ## Usage
 
 ### Reading instances
@@ -84,6 +95,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.2_ Some improvements regarding large numbers.
 - _0.2.1_ Conan is now called directly via `python -m`, in case python modules are not imported to PATH.
 - _0.2.0_ Can now be installed with `pip install cgshop2023-pyutils` on most machines!
 - _0.1.3_ Solution iterator, installable via pip.
