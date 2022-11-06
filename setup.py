@@ -11,7 +11,17 @@ from skbuild import setup
 import subprocess
 
 subprocess.run(
-    ["python3", "-m", "conans.conan", "install", ".", "-if", "cmake"], check=True
+    [
+        "python3",
+        "-m",
+        "conans.conan",
+        "install",
+        ".",
+        "-if",
+        "cmake",
+        "--build=missing",
+    ],
+    check=True,
 )
 
 
@@ -25,7 +35,7 @@ def readme():
 
 setup(
     name="cgshop2023_pyutils",
-    version="0.2.2",
+    version="0.2.3",
     description="Official utilities for the CG:SHOP Challenge 2023.",
     long_description=readme(),
     url="https://github.com/CG-SHOP/pyutils23",
