@@ -1,4 +1,4 @@
-#include "../include/cgshop2023_core/verify.hpp"
+#include "cgshop2023_core/verify.hpp"
 #include "./fmt_point.h"
 #include <CGAL/Boolean_set_operations_2.h>
 #include <fmt/core.h>
@@ -83,6 +83,10 @@ bool SolutionVerifier::verify() {
       return false;
     if (!p_verify_coverage(*coverage))
       return false;
+    if (area(*coverage) != area(instance().polygon())) {
+      m_error = "The area doesn't fit, but somehow no rule has been triggered";
+      return false;
+    }
     return true;
   }
   return false;

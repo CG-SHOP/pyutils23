@@ -17,6 +17,19 @@ def test_basic():
         x = 2**i
         assert float(FieldNumber(f"{x}") / FieldNumber(3)) == pytest.approx(x / 3)
 
+def test_large_numbers():
+    for i in range(100):
+        a = FieldNumber("10"+i*"0")
+        b = FieldNumber("1"+i*"0")
+        assert a/b == FieldNumber("10")
+    for i in range(1, 100):
+        a = FieldNumber(i*"8")
+        b = FieldNumber(i*"4")
+        assert a/b == FieldNumber("2")
+    for i in range(100):
+        a = "10"+i*"0"
+        b = "1"+i*"0"
+        assert FieldNumber(f"{a}/{b}") == FieldNumber("10")        
 
 def test_point():
     p = Point(FieldNumber("1"), FieldNumber("2"))
