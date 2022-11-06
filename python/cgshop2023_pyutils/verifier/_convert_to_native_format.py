@@ -6,6 +6,7 @@ from ..core import (
     PolygonWithHoles,
 )
 
+
 def _str_to_number(number_data: str) -> FieldNumber:
     number_data = number_data.strip()
     if "." in number_data:
@@ -16,9 +17,10 @@ def _str_to_number(number_data: str) -> FieldNumber:
             _str_to_number(elements[1]) / _to_number(10 ** len(elements[1]))
         )
         return x
-    while(len(number_data)>1 and number_data[0]=="0"):  # remove leading zeros
+    while len(number_data) > 1 and number_data[0] == "0":  # remove leading zeros
         number_data = number_data[1:]
     return FieldNumber(number_data)
+
 
 def _to_number(number_data):
     if isinstance(number_data, float):
@@ -33,7 +35,7 @@ def _to_number(number_data):
             pass
         raise ValueError("Floating point not supported.")
     if isinstance(number_data, int):
-        if number_data< (2**60):  # large ints in python are special...
+        if number_data < (2**60):  # large ints in python are special...
             return FieldNumber(number_data)
         else:
             return _str_to_number(str(number_data))
