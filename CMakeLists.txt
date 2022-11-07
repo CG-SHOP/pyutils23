@@ -64,7 +64,10 @@ target_link_libraries(cgshop2023_core
 #~~~~~~~~~~~ TESTS OF THE PUBLIC INTERFACE ~~~~~~~~~~~~~~
 # A good programmer will add at least some unit tests.
 # The tests-folder can also be used for Python-tests, without interference.
-add_subdirectory(tests)  # defined in a separate CMakeLists.txt
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt")
+    # only import if exists. The production code may be shipped without.
+    add_subdirectory(tests)  # defined in a separate CMakeLists.txt
+endif()
 
 #~~~~~~~~~~~~~~~~~~ Python Interface ~~~~~~~~~~~~~~~~~~~~
 # The Python-bindings are compiled as separate target to allow the independent

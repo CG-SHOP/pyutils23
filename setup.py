@@ -35,7 +35,7 @@ def readme():
 
 setup(
     name="cgshop2023_pyutils",
-    version="0.2.3",
+    version="0.2.4",
     description="Official utilities for the CG:SHOP Challenge 2023.",
     long_description=readme(),
     url="https://github.com/CG-SHOP/pyutils23",
