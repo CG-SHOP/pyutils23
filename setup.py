@@ -10,6 +10,8 @@ from skbuild import setup
 # automatically running conan. Ugly workaround, but does its job.
 import subprocess
 
+# because we are using subprocesses, conan has to be in the path. This is mostly
+# the case but does not have to be. A workaround is directly accessing the python module.
 subprocess.run(
     [
         "python3",
@@ -35,7 +37,7 @@ def readme():
 
 setup(
     name="cgshop2023_pyutils",
-    version="0.2.4",
+    version="0.2.5",
     description="Official utilities for the CG:SHOP Challenge 2023.",
     long_description=readme(),
     url="https://github.com/CG-SHOP/pyutils23",
