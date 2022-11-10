@@ -99,6 +99,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.5_ Lowered required CMake-version to support some more LTS-systems.
 - _0.2.4_ Fixed problem with install via `pip` because it ships without tests.
 - _0.2.3_ `--build=missing` for conan. Why didn't the CI complain before?
 - _0.2.2_ Some improvements regarding large numbers.
