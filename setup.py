@@ -47,6 +47,7 @@ setup(
     packages=find_packages("python"),  # Include all packages in `./python`.
     package_dir={"": "python"},  # The root for out python package is in `./python`.
     python_requires=">=3.7",
+    cmake_minimum_required_version="3.17",
     classifiers=[
         "Development Status :: 4 - Beta",
         "License :: OSI Approved :: MIT License",

@@ -67,9 +67,16 @@ target_link_libraries(cgshop2023_core
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt")
     # only import if exists. The production code may be shipped without.
     add_subdirectory(tests)  # defined in a separate CMakeLists.txt
-endif()
+endif ()
 
 #~~~~~~~~~~~~~~~~~~ Python Interface ~~~~~~~~~~~~~~~~~~~~
 # The Python-bindings are compiled as separate target to allow the independent
 # usage of the C++-library.
 add_subdirectory(python)  # defined in a separate CMakeLists.txt
+
+#~~~~~~~~~~~~~~~~ Apps ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if (NOT SKBUILD)
+    add_executable(bad_cgal
+            apps/cgal_problem.cpp)
+    target_link_libraries(bad_cgal CGAL::CGAL)
+endif ()
