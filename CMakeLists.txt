@@ -64,7 +64,7 @@ target_link_libraries(cgshop2023_core
 #~~~~~~~~~~~ TESTS OF THE PUBLIC INTERFACE ~~~~~~~~~~~~~~
 # A good programmer will add at least some unit tests.
 # The tests-folder can also be used for Python-tests, without interference.
-if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt")
+if (NOT SKBUILD)
     # only import if exists. The production code may be shipped without.
     add_subdirectory(tests)  # defined in a separate CMakeLists.txt
 endif ()
@@ -75,8 +75,20 @@ endif ()
 add_subdirectory(python)  # defined in a separate CMakeLists.txt
 
 #~~~~~~~~~~~~~~~~ Apps ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if (NOT SKBUILD)
+if (NOT SKBUILD)  # only make available if not using SKBUILD.
     add_executable(bad_cgal
             apps/cgal_problem.cpp)
     target_link_libraries(bad_cgal CGAL::CGAL)
+
+    add_executable(verify_instance
+            apps/cpp_verify_instance.cpp
+            include/cgshop2023_core/cpp_instance.hpp
+            include/cgshop2023_core/verify.hpp
+            src/cpp_instance.cpp
+            src/verify.cpp
+            src/arrangement_util.hpp
+            )
+    target_include_directories(verify_instance PUBLIC ./include)
+    target_link_libraries(verify_instance
+            CGAL::CGAL nlohmann_json::nlohmann_json fmt::fmt)
 endif ()

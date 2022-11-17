@@ -18,6 +18,10 @@ target_link_libraries(_cgshop2023_core PRIVATE fmt::fmt CGAL::CGAL)
 # enable compilation warnings
 target_compile_options(_cgshop2023_core PRIVATE
         "$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall>")
-# This definition is important for scikit-build to copy the binary to the right position.
+# This definition is important for skbuild to copy the binary to the right
+# position in the package.
+# !!! This part is critical and a wrong configuration leads to bad packages
+# !!! without an error. Use a path relative to the project root (or
+# !!! `cmake_install_dir`[setup.py], if used).
 install(TARGETS _cgshop2023_core DESTINATION ./python/cgshop2023_pyutils/core)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
