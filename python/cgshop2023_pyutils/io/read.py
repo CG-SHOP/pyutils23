@@ -21,27 +21,40 @@ def read_solution(path) -> typing.Dict:
     data = json.load(path)
     return parse_solution(data)
 
+class NoSolution(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
+
+class BadSolutionFile(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
 
 def parse_solution(data):
     if data["type"] != "CGSHOP2023_Solution":
-        raise ValueError("Not a CGSHOP2023 solution file")
+        raise NoSolution("Not a CGSHOP2023 solution file")
     if "id" in data and "instance" not in data:
         data["instance"] = data["id"]
     if "name" in data and "instance" not in data:
         data["instance"] = data["name"]
     if not data["instance"] or not isinstance(data["instance"], str):
-        raise ValueError("Missing instance name")
+        raise BadSolutionFile("Missing instance name")
     data["instance"] = data["instance"].split("/")[-1].split(".")[0]
     polygons = data["polygons"]
     if not isinstance(polygons, list):
-        raise ValueError("Solution is not a list.")
+        raise BadSolutionFile("Solution is not a list.")
     data["polygons"] = [p for p in data["polygons"] if p]  # remove empty polygons
     if not polygons:
-        raise ValueError("At least one polygon must be provided")
+        raise BadSolutionFile("At least one polygon must be provided")
     if not all(isinstance(p, list) for p in polygons):
-        raise ValueError("Badly encoded polygon. All polygons need to be lists.")
+        raise BadSolutionFile("Badly encoded polygon. All polygons need to be lists.")
     if not all(len(p) >= 3 for p in polygons):
-        raise ValueError(
+        raise BadSolutionFile(
             "All polygons need to consist of at least three distinct points."
         )
     return data
