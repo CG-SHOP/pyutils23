@@ -37,7 +37,7 @@ class ZipTooLargeError(ZipReaderError):
 
 class NoSolutionsError(ZipReaderError):
     def __init__(self):
-        super().__init__("The ZIP archive does not appear to contain any solution!")
+        super().__init__("The ZIP archive does not appear to contain any solution! Make sure, you tagged all instances with 'type=\"CGSHOP2023_Solution\"'. A common mistake is to accidentally use the instance tag instead.")
 
 
 class InvalidJSONError(ZipReaderError):

@@ -121,6 +121,7 @@ class ZipSolutionIterator:
         :param path_or_file: Zip or file
         :return:
         """
+        found_an_instance =False
         try:
             with ZipFile(path_or_file) as zip_file:
                 self._check_if_bad_zip(zip_file)
@@ -135,9 +136,12 @@ class ZipSolutionIterator:
                         solution = parse_solution(solution_json)
                         solution["meta"] = meta
                         yield solution
+                        found_an_instance = True
                     except NoSolution:
                         print(f"Skipping {file_name}, as it is not a solution file.")
         except BadZipFile as e:
             raise InvalidZipError(f"{e}") from e
         except BadSolutionFile as e:
             raise InvalidZipError(f"Aborted parsing zip due to bad file: {e}") from e
+        if not found_an_instance:
+            raise NoSolutionsError()

@@ -37,7 +37,7 @@ run_conan()  # automatically running conan. Ugly workaround, but does its job.
 setup(  # https://scikit-build.readthedocs.io/en/latest/usage.html#setup-options
     # ~~~~~~~~~ BASIC INFORMATION ~~~~~~~~~~~
     name="cgshop2023_pyutils",
-    version="0.2.8",  # TODO: Use better approach for managing version number.
+    version="0.2.9",  # TODO: Use better approach for managing version number.
     description="Official utilities for the CG:SHOP Challenge 2023.",
     long_description=readme(),
     url="https://github.com/CG-SHOP/pyutils23",
