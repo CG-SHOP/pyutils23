@@ -99,6 +99,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.8_ Fixing 0.2.7, as try-except was placed around the wrong block.
 - _0.2.7_ Slightly changed handling of bad encodings. Files without correct type will automatically be skipped without error.
 - _0.2.6_ Add `cmake_minimum_require_version` to hopefully expand support for older systems. Additionally, extended documentation for copying project structure.
 - _0.2.5_ Lowered required CMake-version to support some more LTS-systems.
