@@ -109,12 +109,9 @@ class ZipSolutionIterator:
 
     def _iterate_solution_jsons(self, zip_file):
         for file_name in self._iterate_solution_filenames(zip_file):
-            try:
-                with zip_file.open(file_name, "r") as sol_file:
-                    info = zip_file.getinfo(file_name)
-                    yield file_name, self._parse_file(sol_file, file_name, info)
-            except NoSolution:
-                print(f"Skipping {file_name}, as it is not a solution file.")
+            with zip_file.open(file_name, "r") as sol_file:
+                info = zip_file.getinfo(file_name)
+                yield file_name, self._parse_file(sol_file, file_name, info)
 
     def __call__(
         self, path_or_file: Union[BinaryIO, str, PathLike]
@@ -134,9 +131,12 @@ class ZipSolutionIterator:
                             "file_in_zip": file_name,
                         }
                     }
-                    solution = parse_solution(solution_json)
-                    solution["meta"] = meta
-                    yield solution
+                    try:
+                        solution = parse_solution(solution_json)
+                        solution["meta"] = meta
+                        yield solution
+                    except NoSolution:
+                        print(f"Skipping {file_name}, as it is not a solution file.")
         except BadZipFile as e:
             raise InvalidZipError(f"{e}") from e
         except BadSolutionFile as e:
