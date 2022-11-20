@@ -11,7 +11,7 @@ from json import JSONDecodeError
 
 import chardet
 
-from ..io import parse_solution
+from ..io import parse_solution, NoSolution, BadSolutionFile
 from .zip_reader_errors import (
     BadZipChecker,
     NoSolutionsError,
@@ -109,9 +109,12 @@ class ZipSolutionIterator:
 
     def _iterate_solution_jsons(self, zip_file):
         for file_name in self._iterate_solution_filenames(zip_file):
-            with zip_file.open(file_name, "r") as sol_file:
-                info = zip_file.getinfo(file_name)
-                yield file_name, self._parse_file(sol_file, file_name, info)
+            try:
+                with zip_file.open(file_name, "r") as sol_file:
+                    info = zip_file.getinfo(file_name)
+                    yield file_name, self._parse_file(sol_file, file_name, info)
+            except NoSolution:
+                print(f"Skipping {file_name}, as it is not a solution file.")
 
     def __call__(
         self, path_or_file: Union[BinaryIO, str, PathLike]
@@ -136,3 +139,5 @@ class ZipSolutionIterator:
                     yield solution
         except BadZipFile as e:
             raise InvalidZipError(f"{e}") from e
+        except BadSolutionFile as e:
+            raise InvalidZipError(f"Aborted parsing zip due to bad file: {e}") from e
