@@ -44,6 +44,10 @@ Mac OS X users may have to execute `xcode-select --install`.
 > If it fails, simply try again. If it fails again, please open an issue to let us know
 > about the problem.
 
+If you are using conda, you may need to install the C++-compiler within the conda
+environment first as otherwise glibc may be incompatible. You can do so by executing
+`conda install -c conda-forge cxx-compiler` within the environment.
+
 ## Usage
 
 ### Reading instances
