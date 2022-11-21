@@ -20,8 +20,10 @@ public:
       std::cerr << "Outer boundary invalid!\n";
       return false;
     }
-    auto first_inner = *arrangement.unbounded_face()->holes_begin();
-    auto interior = first_inner->twin()->face();
+    FaceHandle unbounded = arrangement.unbounded_face();
+    Arrangement::Inner_ccb_iterator hole_iter = unbounded->holes_begin();
+    HalfedgeCirc circulator = *hole_iter;
+    FaceHandle interior = circulator->twin()->face();
     for (const auto &h : instance->polygon().holes()) {
       if (!p_add_and_check(h, interior)) {
         return false;

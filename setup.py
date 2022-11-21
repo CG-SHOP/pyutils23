@@ -17,14 +17,15 @@ https://scikit-build.readthedocs.io/en/latest/usage.html#setup-options
 
 from setuptools import find_packages
 from skbuild import setup
+import sys
 
 
 def run_conan():
     import subprocess
 
     # Make sure to access to local conan
-    cmd = "python3 -m conans.conan install . -if cmake --build=missing"
-    subprocess.run(cmd.split(" "), check=True)
+    cmd = "-m conans.conan install . -if cmake --build=missing"
+    subprocess.run([sys.executable, *cmd.split(" ")], check=True)
 
 
 def readme():

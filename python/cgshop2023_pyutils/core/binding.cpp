@@ -39,7 +39,7 @@ Kernel::FT str_to_exact(std::string number) {
   }
   constexpr size_t max_len = 14;
   if (number.length() <= max_len) {
-    return to_exact(std::stol(number));
+    return to_exact(std::int64_t(std::stoll(number)));
   }
   const Kernel::FT small_part =
       str_to_exact(number.substr(number.length() - max_len, max_len));
