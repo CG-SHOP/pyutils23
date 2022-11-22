@@ -16,6 +16,7 @@ include(./cmake/CCache.cmake)  # Magic to speed up compiling by caching.
 # (which conan has at the time).
 # If the dependency has complicated dependencies on its own or is slow to
 # compile, better use conan.
+# Check out https://github.com/cpm-cmake/CPM.cmake
 include(./cmake/CPM.cmake)  # Package manager for simple requirements.
 
 CPMAddPackage("gh:fmtlib/fmt#9.1.0")  # fmt for nice strings
@@ -30,9 +31,6 @@ CPMAddPackage("gh:fmtlib/fmt#9.1.0")  # fmt for nice strings
 
 # run `conan install .. --build=missing` in `./cmake`.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/cmake)
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
-
 
 # Also need to be defined in `./conanfile.txt`.
 find_package(CGAL REQUIRED)
