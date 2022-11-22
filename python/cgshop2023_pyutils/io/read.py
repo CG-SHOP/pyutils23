@@ -21,6 +21,7 @@ def read_solution(path) -> typing.Dict:
     data = json.load(path)
     return parse_solution(data)
 
+
 class NoSolution(Exception):
     def __init__(self, msg):
         self.msg = msg
@@ -28,12 +29,14 @@ class NoSolution(Exception):
     def __str__(self):
         return self.msg
 
+
 class BadSolutionFile(Exception):
     def __init__(self, msg):
         self.msg = msg
 
     def __str__(self):
         return self.msg
+
 
 def parse_solution(data):
     if data["type"] != "CGSHOP2023_Solution":

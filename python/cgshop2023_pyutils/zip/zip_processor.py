@@ -121,7 +121,7 @@ class ZipSolutionIterator:
         :param path_or_file: Zip or file
         :return:
         """
-        found_an_instance =False
+        found_an_instance = False
         try:
             with ZipFile(path_or_file) as zip_file:
                 self._check_if_bad_zip(zip_file)

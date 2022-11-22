@@ -99,6 +99,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.10_ Windows support (experimental), cleaning up some things.
 - _0.2.9_ Throwing an error if no solutions where found.
 - _0.2.8_ Fixing 0.2.7, as try-except was placed around the wrong block.
 - _0.2.7_ Slightly changed handling of bad encodings. Files without correct type will automatically be skipped without error.

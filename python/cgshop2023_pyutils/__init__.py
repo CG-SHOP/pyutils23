@@ -13,9 +13,8 @@ It will return an empty string if everything is ok, otherwise a message
 describing the problem.
 
 This library uses a compiled C++-core. If you get segmentation faults, you
-may want to compile and install the module manually. This is trivial by
-simply running `./install.sh`. All dependencies will automatically be
-resolved using pip and conan.
+may want remove and reinstall it, in order to trigger a recompilation.
+See the readme for further information.
 """
 # flake8: noqa F401
 from .io import read_solution, read_instance
