@@ -21,7 +21,7 @@ implement an effizient optimizer with Python and C++.
 Installation is easy via
 
 ```shell
-pip install csghop2023-pyutils
+pip install cgshop2023-pyutils
 ```
 
 Note that this can take some minutes, because a native core based on CGAL will
