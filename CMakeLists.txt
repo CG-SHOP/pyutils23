@@ -29,7 +29,7 @@ CPMAddPackage("gh:fmtlib/fmt#9.1.0")  # fmt for nice strings
 # PRO: Simple option that is compatible with scikit-build. Can work without conan.
 # CON: Difficult if you want to use changing conan settings.
 
-# run `conan install .. --build=missing` in `./cmake`.
+# run `conan install .. --build=missing` in `./cmake/conan`.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/conan)
 
