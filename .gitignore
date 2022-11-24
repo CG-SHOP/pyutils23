@@ -195,5 +195,5 @@ cython_debug/
 # scikit-build
 _skbuild/
 
-cmake/*
+cmake/conan/*
 **/cmake-build*

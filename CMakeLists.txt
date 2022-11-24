@@ -31,6 +31,7 @@ CPMAddPackage("gh:fmtlib/fmt#9.1.0")  # fmt for nice strings
 
 # run `conan install .. --build=missing` in `./cmake`.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/conan)
 
 # Also need to be defined in `./conanfile.txt`.
 find_package(CGAL REQUIRED)

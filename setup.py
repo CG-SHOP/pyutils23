@@ -14,6 +14,7 @@ the native modules and move them into your source folder.
 The setup options are documented here:
 https://scikit-build.readthedocs.io/en/latest/usage.html#setup-options
 """
+import os
 
 from setuptools import find_packages
 from skbuild import setup
@@ -24,7 +25,9 @@ def run_conan():
     import subprocess
 
     # Make sure to access to local conan
-    cmd = "-m conans.conan install . -if cmake --build=missing"
+    conan_path = os.path.join("cmake", "conan")
+    os.makedirs(conan_path, exist_ok=True)
+    cmd = f"-m conans.conan install . -if {conan_path} --build=missing"
     subprocess.run([sys.executable, *cmd.split(" ")], check=True)
 
 
