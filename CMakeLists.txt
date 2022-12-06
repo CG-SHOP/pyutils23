@@ -30,6 +30,7 @@ CPMAddPackage("gh:fmtlib/fmt#9.1.0")  # fmt for nice strings
 # CON: Difficult if you want to use changing conan settings.
 
 # run `conan install .. --build=missing` in `./cmake`.
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # Also need to be defined in `./conanfile.txt`.
