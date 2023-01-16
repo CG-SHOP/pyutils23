@@ -99,6 +99,7 @@ problem only happened for very complex instances and was hard to reproduce.
 
 ## Changes
 
+- _0.2.11_ Move to CGAL 5.5 with non-polylines algorithm for CGAL::difference, hoping that this will fix segfault issues in CGAL some people encounter.
 - _0.2.10_ Windows support (experimental), cleaning up some things.
 - _0.2.9_ Throwing an error if no solutions where found.
 - _0.2.8_ Fixing 0.2.7, as try-except was placed around the wrong block.
