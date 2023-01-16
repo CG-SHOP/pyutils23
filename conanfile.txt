@@ -1,5 +1,5 @@
 [requires]
-cgal/[==5.3]
+cgal/[>=5.5]
 nlohmann_json/[>=3.11]
 
 [generators]

@@ -59,7 +59,7 @@ Kernel::FT area(const Polygon &polygon) {
 bool SolutionVerifier::p_verify_coverage(const Polygon &coverage) {
   const Polygon &ipoly = instance().polygon();
   std::vector<Polygon> diff_results;
-  CGAL::difference(ipoly, coverage, std::back_inserter(diff_results));
+  CGAL::difference(ipoly, coverage, std::back_inserter(diff_results), CGAL::Tag_false{});
   return std::all_of(
       diff_results.begin(), diff_results.end(), [&](const auto &poly) {
         const auto &ob = poly.outer_boundary();
