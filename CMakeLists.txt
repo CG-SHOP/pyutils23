@@ -79,6 +79,10 @@ if (NOT SKBUILD)  # only make available if not using SKBUILD.
             apps/cgal_problem.cpp)
     target_link_libraries(bad_cgal CGAL::CGAL)
 
+    add_executable(bad_cgal2
+            apps/cgal_problem2.cpp)
+    target_link_libraries(bad_cgal2 CGAL::CGAL nlohmann_json::nlohmann_json)
+
     add_executable(verify_instance
             apps/cpp_verify_instance.cpp
             include/cgshop2023_core/cpp_instance.hpp
