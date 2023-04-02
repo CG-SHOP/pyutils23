@@ -19,15 +19,34 @@ import os
 from setuptools import find_packages
 from skbuild import setup
 import sys
+import subprocess
+import json
 
+def conan_to_json(args):
+    """
+    Runs conan with the args and parses the output as json.
+    """
+    args = [sys.executable, "-m", "conans.conan"] + args
+    return json.loads(subprocess.check_output(args).decode())
+def create_conan_profile():
+    # check if profile exists or create a default one automatically.
+    if "default" in conan_to_json(["profile", "list", "-f", "json"]):
+        return  # Profile already exists
+    cmd = f"-m conans.conan profile detect"
+    subprocess.run([sys.executable, *cmd.split(" ")], check=False, stderr=None)
 
 def run_conan():
-    import subprocess
-
-    # Make sure to access to local conan
-    conan_path = os.path.join("cmake", "conan")
-    os.makedirs(conan_path, exist_ok=True)
-    cmd = f"-m conans.conan install . -if {conan_path} --build=missing"
+    """
+    Running conan to get C++ dependencies
+    """
+    create_conan_profile()
+    settings = {
+        # "compiler.libcxx": "libstdc++11"  # maybe necessary to make sure the ABI fits
+    }
+    cmd = f"-m conans.conan install ."
+    for key, val in settings.items():
+        cmd += f" -s {key}={val}"
+    cmd += " --build=missing"
     subprocess.run([sys.executable, *cmd.split(" ")], check=True)
 
 
@@ -41,7 +60,7 @@ run_conan()  # automatically running conan. Ugly workaround, but does its job.
 setup(  # https://scikit-build.readthedocs.io/en/latest/usage.html#setup-options
     # ~~~~~~~~~ BASIC INFORMATION ~~~~~~~~~~~
     name="cgshop2023_pyutils",
-    version="0.2.10",  # TODO: Use better approach for managing version number.
+    version="0.2.11",  # TODO: Use better approach for managing version number.
     description="Official utilities for the CG:SHOP Challenge 2023.",
     long_description=readme(),
     url="https://github.com/CG-SHOP/pyutils23",
@@ -92,8 +111,18 @@ setup(  # https://scikit-build.readthedocs.io/en/latest/usage.html#setup-options
     #
     # Some CMake-projects allow you to configure it using parameters. You
     # can specify them for this Python-package using the following line.
-    # cmake_args=["-DCGALPY_KERNEL_BINDINGS=epec",
-    #             "-DCGALPY_ARRANGEMENT_ON_SURFACE_2_BINDINGS=ON",]
+    cmake_args=[
+        # -----------------------------------------------------------
+        # CUSTOM CMAKE ARGUMENTS:
+        # "-DCGALPY_KERNEL_BINDINGS=epec",
+        #             "-DCGALPY_ARRANGEMENT_ON_SURFACE_2_BINDINGS=ON",
+        # ------------------------------------------------------------
+        # MANDATORY CMAKE ARGUMENTS FOR CONAN:
+        # The following cmake-argument is necessary to load the toolchain
+        # of conan. The absolute path is necessary as otherwise the
+        # probing of scikit-build does not work.
+        f"-DCMAKE_TOOLCHAIN_FILE={os.path.abspath('./conan_toolchain.cmake')}",
+    ]
     #
     # There are further options, but you should be fine with these above.
 )

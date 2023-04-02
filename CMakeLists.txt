@@ -23,17 +23,10 @@ CPMAddPackage("gh:fmtlib/fmt#9.1.0")  # fmt for nice strings
 # further CPM-dependencies are defined in the subdirectories
 
 #~~~~~~~~~~~~~~~~~ Conan dependencies ~~~~~~~~~~~~~~~~~~~~~
-# We are using the `cmake_find_package` generator to create `FindXXX`-files
-# in the `cmake`-folder. This is only necessary, if the packages are not
-# already installed. This approach is not without its problems:
-# PRO: Simple option that is compatible with scikit-build. Can work without conan.
-# CON: Difficult if you want to use changing conan settings.
-
-# run `conan install .. --build=missing` in `./cmake/conan`.
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/conan)
-
-# Also need to be defined in `./conanfile.txt`.
+# Run `conan install . --build=missing` to create `conan_toolchain.cmake` and install
+# dependencies. Add `-DCMAKE_TOOLCHAIN_FILE='./conan_toolchain.cmake'` to your cmake call
+# to use this toolchain.
+# The dependencies are defined in `./conanfile.txt`.
 find_package(CGAL REQUIRED)
 find_package(nlohmann_json REQUIRED)
 

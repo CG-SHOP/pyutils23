@@ -6,7 +6,7 @@
 #include <functional>
 #include <numeric>
 #include <type_traits>
-
+#include <ostream>
 namespace cgshop2023 {
 
 // check that all polygons of the solution are convex
@@ -77,16 +77,23 @@ bool SolutionVerifier::p_verify_coverage(const Polygon &coverage) {
 bool SolutionVerifier::verify() {
   if (!p_verify_convexity())
     return false;
+  std::cout << "compute_coverage"<<std::endl;
   auto coverage = compute_coverage();
+  std::cout << "if (coverage)"<<std::endl;
   if (coverage) {
+    std::cout << "check_coverage_area_size"<<std::endl;
     if (!check_coverage_area_size(*coverage))
       return false;
+    std::cout << "p_verify_coverage"<<std::endl;
     if (!p_verify_coverage(*coverage))
       return false;
+    std::cout << "begin area" <<std::endl;
     if (area(*coverage) != area(instance().polygon())) {
+      std::cout << "end area" <<std::endl;
       m_error = "The area doesn't fit, but somehow no rule has been triggered";
       return false;
     }
+    std::cout << "end area" <<std::endl;
     return true;
   }
   return false;
@@ -94,7 +101,15 @@ bool SolutionVerifier::verify() {
 
 bool SolutionVerifier::check_coverage_area_size(const Polygon &coverage) {
   const Polygon &ipoly = instance().polygon();
-  if (area(coverage) > area(ipoly)) {
+  std::cout << "ipoly num_holes"<< ipoly.number_of_holes() << std::endl;
+  std::cout << "cov num_holes"<< coverage.number_of_holes() << std::endl;
+  const auto a1 = area(coverage);  // Kernel::FT
+  std::cout << "a1"<<CGAL::to_double(a1) <<std::endl;  // 4.25268e+17
+  const auto a2 = area(ipoly);  // Kernel::FT
+  std::cout << "a2"<<CGAL::to_double(a2) <<std::endl;  // 4.25268e+17
+  bool c = a1 > a2;
+  std::cout <<"c" <<c<<std::endl<<std::flush;
+  if (c) {
     m_error = fmt::format("the solution covers more area than the instance.");
     return false;
   }

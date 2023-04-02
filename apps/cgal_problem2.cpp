@@ -55,7 +55,14 @@ FT get_number(const json &data) {
   std::string den = data["den"].get<std::string>();
   return str_to_exact(num) / str_to_exact(den);
 }
-
+Kernel::FT area(const Polygon2WithHoles &polygon) {
+  // Compute area of non-simple polygon
+  auto area = polygon.outer_boundary().area();
+  // hole areas are negative, so we can simply sum them up.
+  return std::transform_reduce(polygon.holes_begin(), polygon.holes_end(), area,
+                               std::plus<>(),
+                               [](const auto &p) { return p.area(); });
+}
 int main(int argc, char **argv) {
   if(argc<=1) {
     std::cerr << "Specify a path to a json-encoded solution" <<std::endl;
@@ -74,4 +81,5 @@ int main(int argc, char **argv) {
   std::vector<Polygon2WithHoles> coverage;
   CGAL::join(polys.begin(), polys.end(), std::back_inserter(coverage));
   std::cout << "Cov: " << coverage.size() << std::endl;
+  std::cout << (area(coverage.at(0))> FT(4.25268e+17))<<std::endl;
 }
